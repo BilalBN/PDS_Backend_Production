@@ -1,6 +1,7 @@
 import { Migrator } from '@mikro-orm/migrations';
 import { defineConfig, PostgreSqlDriver } from '@mikro-orm/postgresql';
 import { SeedManager } from '@mikro-orm/seeder';
+import { BatchesSchema } from './src/modules/batches/entities/batches.entity';
 import { ProductsSchema } from './src/modules/products/entities/products.entity';
 import { MainStepsSchema } from './src/modules/steps/entities/main.steps.entity';
 import { SubStepsSchema } from './src/modules/steps/entities/sub.steps.entity';
@@ -13,7 +14,13 @@ export default defineConfig({
   driverOptions: {
     ssl: { rejectUnauthorized: false },
   },
-  entities: [UserSchema, ProductsSchema, MainStepsSchema, SubStepsSchema],
+  entities: [
+    UserSchema,
+    ProductsSchema,
+    MainStepsSchema,
+    SubStepsSchema,
+    BatchesSchema,
+  ],
   extensions: [Migrator, SeedManager],
   migrations: {
     path: './dist/migrations',

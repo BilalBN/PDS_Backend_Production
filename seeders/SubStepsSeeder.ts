@@ -34,7 +34,9 @@ export class SubStepsSeeder extends Seeder {
       main_step_id: item['MAIN_STEP_ID'],
     }));
 
-    await em.upsertMany(SubStepsSchemaClass, subStepsDataToImport);
+    await em.upsertMany(SubStepsSchemaClass, subStepsDataToImport, {
+      onConflictMergeFields: ['id', 'dynamic', 'main_step', 'name'],
+    });
 
     await em.flush();
   }

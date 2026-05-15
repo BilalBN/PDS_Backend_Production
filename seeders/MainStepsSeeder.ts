@@ -33,7 +33,9 @@ export class MainStepsSeeder extends Seeder {
       product_id: item['PRODUCT_ID'],
     }));
 
-    await em.upsertMany(MainStepsSchemaClass, mainStepsDataToImport);
+    await em.upsertMany(MainStepsSchemaClass, mainStepsDataToImport, {
+      onConflictMergeFields: ['id', 'name'],
+    });
 
     await em.flush();
   }

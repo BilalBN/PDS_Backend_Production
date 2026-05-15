@@ -1,5 +1,6 @@
 import { defineEntity, p } from '@mikro-orm/core';
 import { compare } from 'bcrypt';
+import { BatchesSchemaClass } from '../../batches/entities/batches.entity';
 
 export const UserSchema = defineEntity({
   name: 'UserSchemaClass',
@@ -14,6 +15,10 @@ export const UserSchema = defineEntity({
     username: p.text().index(),
     created_at: p.datetime(),
     updated_at: p.datetime().nullable(),
+    created_batches: () =>
+      p.oneToMany(BatchesSchemaClass).mappedBy('created_by'),
+    supervised_batches: () =>
+      p.oneToMany(BatchesSchemaClass).mappedBy('supervised_by'),
   },
 });
 

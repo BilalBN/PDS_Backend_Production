@@ -36,7 +36,7 @@ export class LoginService {
       });
     }
 
-    const jwtPayload = { id: user.id };
+    const jwtPayload = { id: user.id, role: user.role };
     const accessToken = this.jwtService.sign(jwtPayload);
 
     return {

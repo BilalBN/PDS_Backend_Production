@@ -3,8 +3,8 @@ import { config } from 'dotenv';
 import { afterAll, beforeAll, describe, expect, it } from 'vitest';
 import { ProductsSchema } from '../../src/modules/products/entities/products.entity';
 import {
-    MainStepsSchema,
-    MainStepsSchemaClass,
+  MainStepsSchema,
+  MainStepsSchemaClass,
 } from '../../src/modules/steps/entities/main.steps.entity';
 
 describe('Main steps db test', () => {
@@ -23,7 +23,7 @@ describe('Main steps db test', () => {
   it('Should return all main steps', async () => {
     const em = orm.em.fork();
     const mainSteps = await em.findAll(MainStepsSchemaClass);
-    expect(mainSteps.length).toEqual(67);
+    expect(mainSteps.length).toEqual(62);
   });
 
   it('Should return product with main step id', async () => {

@@ -4,11 +4,23 @@ import { AppService } from './app.service';
 import { config } from './configs/config';
 import { databaseConfig } from './configs/database.config';
 import { jwtConfig } from './configs/jwt.config';
+import { microservicesConfig } from './configs/microservices.config';
+import { AdminModule } from './modules/admin/admin.module';
 import { AuthModule } from './modules/auth/auth.module';
+import { BatchesModule } from './modules/batches/batches.module';
 import { UserModule } from './modules/user/user.module';
 
 @Module({
-  imports: [config, databaseConfig, jwtConfig, AuthModule, UserModule],
+  imports: [
+    config,
+    databaseConfig,
+    jwtConfig,
+    microservicesConfig,
+    AuthModule,
+    UserModule,
+    BatchesModule,
+    AdminModule,
+  ],
   controllers: [AppController],
   providers: [AppService],
 })
