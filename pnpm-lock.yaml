@@ -72,6 +72,9 @@ importers:
       '@mikro-orm/migrations':
         specifier: ^7.0.15
         version: 7.0.15(@mikro-orm/core@7.0.15)
+      '@mikro-orm/seeder':
+        specifier: ^7.0.15
+        version: 7.0.15(@mikro-orm/core@7.0.15)
       '@nestjs/cli':
         specifier: ^11.0.0
         version: 11.0.21(@swc/cli@0.8.1(@swc/core@1.15.33)(chokidar@4.0.3))(@swc/core@1.15.33)(@types/node@25.7.0)(prettier@3.8.3)
@@ -494,6 +497,12 @@ packages:
 
   '@mikro-orm/postgresql@7.0.15':
     resolution: {integrity: sha512-ZkYlZb1VEfELiuT5bkElgkYsuhFgb+j5qk7ZC4Fah8tjU9gU3iqC4pOnXNSQWefXGll8z+lgQXd7OguSYHIfYw==}
+    engines: {node: '>= 22.17.0'}
+    peerDependencies:
+      '@mikro-orm/core': 7.0.15
+
+  '@mikro-orm/seeder@7.0.15':
+    resolution: {integrity: sha512-6GathM87zAKu/B1sodfs6YDde6YRu/tkoZu3c1GhF+FxUpppuQcK7uI0+1cEBWDz4UkfgoK3p4tlTP6KLjequw==}
     engines: {node: '>= 22.17.0'}
     peerDependencies:
       '@mikro-orm/core': 7.0.15
@@ -4129,6 +4138,10 @@ snapshots:
       postgres-interval: 4.0.2
     transitivePeerDependencies:
       - pg-native
+
+  '@mikro-orm/seeder@7.0.15(@mikro-orm/core@7.0.15)':
+    dependencies:
+      '@mikro-orm/core': 7.0.15
 
   '@mikro-orm/sql@7.0.15(@mikro-orm/core@7.0.15)':
     dependencies:
