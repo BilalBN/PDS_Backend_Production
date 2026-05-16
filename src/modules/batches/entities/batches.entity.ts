@@ -12,6 +12,7 @@ export const BatchesSchema = defineEntity({
     expiry_date: p.datetime(),
     start_date: p.datetime(),
     end_date: p.datetime(),
+    status: p.text().default('active'),
     created_at: p.datetime(),
     created_by: () => p.manyToOne(UserSchemaClass).nullable(),
     supervised_by: () => p.manyToOne(UserSchemaClass).nullable(),

@@ -2,6 +2,7 @@ import {
   Controller,
   DefaultValuePipe,
   Get,
+  Param,
   ParseIntPipe,
   Query,
   Request,
@@ -9,6 +10,7 @@ import {
 } from '@nestjs/common';
 import { ApiBearerAuth, ApiQuery } from '@nestjs/swagger';
 import { AuthGuard } from '../../shared/guards/auth.guard';
+import { GetBatchesByStatusService } from './services/get.batches.by.status.service';
 import { GetSupervisedBatchesService } from './services/get.supervised.batches.service';
 
 @ApiBearerAuth()
@@ -16,8 +18,26 @@ import { GetSupervisedBatchesService } from './services/get.supervised.batches.s
 @Controller('batch')
 export class BatchesController {
   constructor(
+    private readonly getBatchesByStatusService: GetBatchesByStatusService,
     private readonly getSupervisedBatchesService: GetSupervisedBatchesService,
   ) {}
+
+  @ApiQuery({ name: 'limit', default: 20, type: 'integer' })
+  @ApiQuery({ name: 'page', default: 1, type: 'integer' })
+  @Get(':status')
+  async getBatchesByStatus(
+    @Param('status') status: string,
+    @Query('limit', ParseIntPipe, new DefaultValuePipe(20)) limit: number,
+    @Query('page', ParseIntPipe, new DefaultValuePipe(1)) page: number,
+    @Request() req,
+  ) {
+    return await this.getBatchesByStatusService.get(
+      req.user.id,
+      status,
+      limit,
+      page,
+    );
+  }
 
   @ApiQuery({ name: 'limit', default: 20, type: 'integer' })
   @ApiQuery({ name: 'page', default: 1, type: 'integer' })

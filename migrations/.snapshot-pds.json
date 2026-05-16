@@ -152,6 +152,22 @@
           "enumItems": [],
           "mappedType": "datetime"
         },
+        "status": {
+          "name": "status",
+          "type": "text",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "unique": false,
+          "length": null,
+          "precision": null,
+          "scale": null,
+          "default": "'active'",
+          "comment": null,
+          "enumItems": [],
+          "mappedType": "text"
+        },
         "supervised_by_id": {
           "name": "supervised_by_id",
           "type": "int",
