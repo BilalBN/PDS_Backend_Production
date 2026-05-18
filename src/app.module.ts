@@ -8,6 +8,7 @@ import { microservicesConfig } from './configs/microservices.config';
 import { AdminModule } from './modules/admin/admin.module';
 import { AuthModule } from './modules/auth/auth.module';
 import { BatchesModule } from './modules/batches/batches.module';
+import { StepsModule } from './modules/steps/steps.module';
 import { UserModule } from './modules/user/user.module';
 
 @Module({
@@ -20,6 +21,7 @@ import { UserModule } from './modules/user/user.module';
     UserModule,
     BatchesModule,
     AdminModule,
+    StepsModule,
   ],
   controllers: [AppController],
   providers: [AppService],

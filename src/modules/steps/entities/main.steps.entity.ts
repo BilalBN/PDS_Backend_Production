@@ -9,9 +9,13 @@ export const MainStepsSchema = defineEntity({
     id: p.integer().primary(),
     name: p.text(),
     created_at: p.datetime(),
-    product: () =>
-      p.manyToOne(ProductsSchemaClass).nullable().cascade(Cascade.ALL),
-    sub_steps: () => p.oneToMany(SubStepsSchemaClass).mappedBy('main_step'),
+    product: () => p.manyToOne(ProductsSchemaClass).nullable(),
+    sub_steps: () =>
+      p
+        .oneToMany(SubStepsSchemaClass)
+        .mappedBy('main_step')
+        .cascade(Cascade.ALL)
+        .orphanRemoval(true),
   },
 });
 

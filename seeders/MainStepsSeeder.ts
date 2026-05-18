@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unsafe-member-access */
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import type { EntityManager } from '@mikro-orm/core';
 import { Seeder } from '@mikro-orm/seeder';
 import { Workbook } from 'exceljs';
@@ -34,7 +32,7 @@ export class MainStepsSeeder extends Seeder {
     }));
 
     await em.upsertMany(MainStepsSchemaClass, mainStepsDataToImport, {
-      onConflictMergeFields: ['id', 'name'],
+      onConflictMergeFields: ['id', 'name', 'product'],
     });
 
     await em.flush();

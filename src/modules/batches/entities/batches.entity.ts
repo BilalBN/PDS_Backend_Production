@@ -1,4 +1,4 @@
-import { Cascade, defineEntity, p } from '@mikro-orm/core';
+import { defineEntity, p } from '@mikro-orm/core';
 import { ProductsSchemaClass } from '../../products/entities/products.entity';
 import { UserSchemaClass } from '../../user/entities/user.entity';
 
@@ -16,8 +16,7 @@ export const BatchesSchema = defineEntity({
     created_at: p.datetime(),
     created_by: () => p.manyToOne(UserSchemaClass).nullable(),
     supervised_by: () => p.manyToOne(UserSchemaClass).nullable(),
-    product: () =>
-      p.manyToOne(ProductsSchemaClass).nullable().cascade(Cascade.ALL),
+    product: () => p.manyToOne(ProductsSchemaClass).nullable(),
   },
 });
 

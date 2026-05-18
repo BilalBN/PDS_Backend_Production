@@ -18,22 +18,19 @@ export class GetBatchesByStatusService {
     }
 
     const offset = (page - 1) * limit;
-    const [batches, count] = await em
-      .createQueryBuilder(BatchesSchemaClass, 'b')
-      .select([
-        'b.created_at',
-        'b.end_date',
-        'b.expiry_date',
-        'b.id',
-        'b.name',
-        'b.size',
-        'b.start_date',
-      ])
-      .where({ 'b.supervised_by': user, status: status })
-      .offset(offset)
-      .limit(limit)
-      .orderBy({ id: 'DESC' })
-      .getResultAndCount();
+    const [batches, count] = await em.findAndCount(
+      BatchesSchemaClass,
+      {
+        status: status,
+        supervised_by: user,
+      },
+      {
+        limit,
+        orderBy: { id: 'ASC' },
+        offset,
+        populate: ['created_by', 'product', 'supervised_by'],
+      },
+    );
 
     if (count === 0) {
       throw new NotFoundException({

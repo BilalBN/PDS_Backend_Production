@@ -1,4 +1,4 @@
-import { Cascade, defineEntity, p } from '@mikro-orm/core';
+import { defineEntity, p } from '@mikro-orm/core';
 import { MainStepsSchemaClass } from './main.steps.entity';
 
 export const SubStepsSchema = defineEntity({
@@ -9,8 +9,7 @@ export const SubStepsSchema = defineEntity({
     name: p.text(),
     dynamic: p.boolean().default(false),
     created_at: p.datetime(),
-    main_step: () =>
-      p.manyToOne(MainStepsSchemaClass).nullable().cascade(Cascade.ALL),
+    main_step: () => p.manyToOne(MainStepsSchemaClass).nullable(),
   },
 });
 
