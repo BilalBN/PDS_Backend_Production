@@ -21,7 +21,7 @@ describe('Get supervised batches service test', () => {
   afterAll(async () => await module.close());
 
   it('Should return all batches', async () => {
-    const result = await getSupervisedBatchesService.get(1);
+    const result = await getSupervisedBatchesService.get(2);
     expect(result.message).toEqual('Batches returned successfully');
   });
 

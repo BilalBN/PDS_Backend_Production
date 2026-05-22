@@ -9,6 +9,7 @@ import { AdminModule } from './modules/admin/admin.module';
 import { AuthModule } from './modules/auth/auth.module';
 import { BatchesModule } from './modules/batches/batches.module';
 import { StepsModule } from './modules/steps/steps.module';
+import { SupervisorModule } from './modules/supervisor/supervisor.module';
 import { UserModule } from './modules/user/user.module';
 
 @Module({
@@ -22,6 +23,7 @@ import { UserModule } from './modules/user/user.module';
     BatchesModule,
     AdminModule,
     StepsModule,
+    SupervisorModule,
   ],
   controllers: [AppController],
   providers: [AppService],
