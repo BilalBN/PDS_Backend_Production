@@ -1,7 +1,11 @@
+import {
+  defineConfig,
+  MariaDbDriver
+} from '@mikro-orm/mariadb';
 import { Migrator } from '@mikro-orm/migrations';
-import { defineConfig, PostgreSqlDriver } from '@mikro-orm/postgresql';
 import { SeedManager } from '@mikro-orm/seeder';
 import { BatchesSchema } from './src/modules/batches/entities/batches.entity';
+import { ParametersSchema } from './src/modules/parameters/entities/parameters.entity';
 import { ProductsSchema } from './src/modules/products/entities/products.entity';
 import { MainStepsSchema } from './src/modules/steps/entities/main.steps.entity';
 import { SubStepsSchema } from './src/modules/steps/entities/sub.steps.entity';
@@ -10,7 +14,7 @@ import { envVars } from './src/shared/constants/env.vars';
 
 export default defineConfig({
   clientUrl: envVars.DB_URL,
-  driver: PostgreSqlDriver,
+  driver: MariaDbDriver,
   driverOptions: {
     ssl: { rejectUnauthorized: false },
   },
@@ -20,11 +24,12 @@ export default defineConfig({
     MainStepsSchema,
     SubStepsSchema,
     BatchesSchema,
+    ParametersSchema,
   ],
   extensions: [Migrator, SeedManager],
   migrations: {
-    path: './dist/migrations',
-    pathTs: './migrations',
+    path: './dist/migrations_mdb',
+    pathTs: './migrations_mdb',
   },
   seeder: {
     path: './dist/seeders',

@@ -1,4 +1,4 @@
-import { EntityManager } from '@mikro-orm/postgresql';
+import { EntityManager } from '@mikro-orm/mariadb';
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { BatchesSchemaClass } from '../../batches/entities/batches.entity';
 import { UserSchemaClass } from '../../user/entities/user.entity';

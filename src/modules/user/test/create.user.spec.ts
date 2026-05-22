@@ -35,6 +35,31 @@ describe('Create user service test', () => {
     expect(result.message).toEqual('User created successfully');
   });
 
+  it('Should return operator user created successfully', async () => {
+    const user: CreateUserDto = {
+      email: 'operator@example.com',
+      password: 'password',
+      username: 'operator',
+      role: UserRole.OPERATOR,
+    };
+
+    const result = await createUserService.create(user);
+    expect(result.message).toEqual('User created successfully');
+  });
+
+  it('Should return supervisor user created successfully', async () => {
+    const user: CreateUserDto = {
+      email: 'supervisor@example.com',
+      password: 'password',
+      phone: '7410258963',
+      username: 'username',
+      role: UserRole.SUPERVISOR,
+    };
+
+    const result = await createUserService.create(user);
+    expect(result.message).toEqual('User created successfully');
+  });
+
   it('Should return user already exist', async () => {
     const user: CreateUserDto = {
       email: 'user@example.com',

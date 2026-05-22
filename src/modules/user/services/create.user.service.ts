@@ -1,4 +1,4 @@
-import { EntityManager } from '@mikro-orm/postgresql';
+import { EntityManager, FilterQuery } from '@mikro-orm/mariadb';
 import { ConflictException, Injectable } from '@nestjs/common';
 import { CreateUserDto } from '../dto/create.user.dto';
 import { UserSchemaClass } from '../entities/user.entity';
@@ -9,12 +9,14 @@ export class CreateUserService {
 
   async create(userDto: CreateUserDto) {
     const em = this.entityManager.fork();
+    const filterQuery: FilterQuery<UserSchemaClass> = [];
+
+    if (userDto.email) filterQuery.push({ email: userDto.email });
+    if (userDto.phone) filterQuery.push({ email: userDto.phone });
+    if (userDto.username) filterQuery.push({ email: userDto.username });
+
     const user = await em.findOne(UserSchemaClass, {
-      $or: [
-        { email: userDto.email },
-        { phone: userDto.phone },
-        { username: userDto.username },
-      ],
+      $or: filterQuery,
     });
 
     if (user) {

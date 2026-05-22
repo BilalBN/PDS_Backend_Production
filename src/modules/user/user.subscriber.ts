@@ -1,5 +1,5 @@
 import { EventArgs, EventSubscriber } from '@mikro-orm/core';
-import { EntityManager } from '@mikro-orm/postgresql';
+import { EntityManager } from '@mikro-orm/mariadb';
 import { Injectable } from '@nestjs/common';
 import { hash } from 'bcrypt';
 import { UserSchemaClass } from './entities/user.entity';

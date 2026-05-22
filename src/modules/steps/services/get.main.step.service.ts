@@ -1,4 +1,4 @@
-import { EntityManager } from '@mikro-orm/postgresql';
+import { EntityManager } from '@mikro-orm/mariadb';
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { UserSchemaClass } from '../../user/entities/user.entity';
 import { MainStepsSchemaClass } from '../entities/main.steps.entity';
@@ -21,6 +21,7 @@ export class GetMainStepsService {
       .createQueryBuilder(MainStepsSchemaClass, 'm')
       .select(['m.id', 'm.name'])
       .where({ product: { id: productId } })
+      .orderBy({ id: 'ASC' })
       .execute('all');
 
     if (steps.length == 0) {

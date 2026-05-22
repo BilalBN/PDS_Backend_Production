@@ -1,4 +1,4 @@
-import { EntityManager } from '@mikro-orm/postgresql';
+import { EntityManager } from '@mikro-orm/mariadb';
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { UserSchemaClass } from '../../user/entities/user.entity';
 import { RequestResetPasswordDto } from '../dto/request.reset.password.dto';

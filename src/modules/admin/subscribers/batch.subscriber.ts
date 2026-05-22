@@ -1,5 +1,5 @@
 import { EntityName, EventArgs, EventSubscriber } from '@mikro-orm/core';
-import { EntityManager } from '@mikro-orm/postgresql';
+import { EntityManager } from '@mikro-orm/mariadb';
 import { Inject, Injectable } from '@nestjs/common';
 import { ClientProxy } from '@nestjs/microservices';
 import { BatchesSchemaClass } from '../../batches/entities/batches.entity';

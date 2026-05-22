@@ -1,33 +1,30 @@
 {
-  "name": "public",
-  "namespaces": [
-    "public"
-  ],
+  "namespaces": [],
   "tables": [
     {
       "name": "batches",
-      "schema": "public",
       "columns": {
         "created_at": {
           "name": "created_at",
-          "type": "timestamptz(6)",
+          "type": "datetime",
           "unsigned": false,
           "autoincrement": false,
           "primary": false,
           "nullable": false,
           "unique": false,
-          "length": 6,
+          "length": null,
           "precision": null,
           "scale": null,
           "default": null,
           "comment": null,
+          "collation": null,
           "enumItems": [],
           "mappedType": "datetime"
         },
         "created_by_id": {
           "name": "created_by_id",
           "type": "int",
-          "unsigned": false,
+          "unsigned": true,
           "autoincrement": false,
           "primary": false,
           "nullable": true,
@@ -37,45 +34,48 @@
           "scale": null,
           "default": null,
           "comment": null,
+          "collation": null,
           "enumItems": [],
           "mappedType": "integer"
         },
         "end_date": {
           "name": "end_date",
-          "type": "timestamptz(6)",
+          "type": "datetime",
           "unsigned": false,
           "autoincrement": false,
           "primary": false,
           "nullable": false,
           "unique": false,
-          "length": 6,
+          "length": null,
           "precision": null,
           "scale": null,
           "default": null,
           "comment": null,
+          "collation": null,
           "enumItems": [],
           "mappedType": "datetime"
         },
         "expiry_date": {
           "name": "expiry_date",
-          "type": "timestamptz(6)",
+          "type": "datetime",
           "unsigned": false,
           "autoincrement": false,
           "primary": false,
           "nullable": false,
           "unique": false,
-          "length": 6,
+          "length": null,
           "precision": null,
           "scale": null,
           "default": null,
           "comment": null,
+          "collation": null,
           "enumItems": [],
           "mappedType": "datetime"
         },
         "id": {
           "name": "id",
           "type": "int",
-          "unsigned": false,
+          "unsigned": true,
           "autoincrement": true,
           "primary": true,
           "nullable": false,
@@ -85,6 +85,7 @@
           "scale": null,
           "default": null,
           "comment": null,
+          "collation": null,
           "enumItems": [],
           "mappedType": "integer"
         },
@@ -96,18 +97,19 @@
           "primary": false,
           "nullable": false,
           "unique": false,
-          "length": null,
+          "length": 65535,
           "precision": null,
           "scale": null,
           "default": null,
           "comment": null,
+          "collation": null,
           "enumItems": [],
           "mappedType": "text"
         },
         "product_id": {
           "name": "product_id",
           "type": "int",
-          "unsigned": false,
+          "unsigned": true,
           "autoincrement": false,
           "primary": false,
           "nullable": true,
@@ -117,6 +119,7 @@
           "scale": null,
           "default": null,
           "comment": null,
+          "collation": null,
           "enumItems": [],
           "mappedType": "integer"
         },
@@ -133,22 +136,24 @@
           "scale": null,
           "default": null,
           "comment": null,
+          "collation": null,
           "enumItems": [],
           "mappedType": "integer"
         },
         "start_date": {
           "name": "start_date",
-          "type": "timestamptz(6)",
+          "type": "datetime",
           "unsigned": false,
           "autoincrement": false,
           "primary": false,
           "nullable": false,
           "unique": false,
-          "length": 6,
+          "length": null,
           "precision": null,
           "scale": null,
           "default": null,
           "comment": null,
+          "collation": null,
           "enumItems": [],
           "mappedType": "datetime"
         },
@@ -160,18 +165,19 @@
           "primary": false,
           "nullable": false,
           "unique": false,
-          "length": null,
+          "length": 65535,
           "precision": null,
           "scale": null,
           "default": "'active'",
           "comment": null,
+          "collation": null,
           "enumItems": [],
           "mappedType": "text"
         },
         "supervised_by_id": {
           "name": "supervised_by_id",
           "type": "int",
-          "unsigned": false,
+          "unsigned": true,
           "autoincrement": false,
           "primary": false,
           "nullable": true,
@@ -181,11 +187,32 @@
           "scale": null,
           "default": null,
           "comment": null,
+          "collation": null,
           "enumItems": [],
           "mappedType": "integer"
         }
       },
       "indexes": [
+        {
+          "columnNames": [
+            "id"
+          ],
+          "composite": false,
+          "constraint": true,
+          "keyName": "PRIMARY",
+          "primary": true,
+          "unique": true
+        },
+        {
+          "columnNames": [
+            "created_by_id"
+          ],
+          "composite": false,
+          "constraint": false,
+          "keyName": "batches_created_by_id_index",
+          "primary": false,
+          "unique": false
+        },
         {
           "columnNames": [
             "name"
@@ -194,31 +221,49 @@
           "constraint": false,
           "keyName": "batches_name_index",
           "primary": false,
+          "unique": false,
+          "columns": [
+            {
+              "name": "name",
+              "length": 768
+            }
+          ]
+        },
+        {
+          "columnNames": [
+            "product_id"
+          ],
+          "composite": false,
+          "constraint": false,
+          "keyName": "batches_product_id_index",
+          "primary": false,
           "unique": false
         },
         {
           "columnNames": [
-            "id"
+            "supervised_by_id"
           ],
           "composite": false,
-          "constraint": true,
-          "keyName": "batches_pkey",
-          "primary": true,
-          "unique": true
+          "constraint": false,
+          "keyName": "batches_supervised_by_id_index",
+          "primary": false,
+          "unique": false
         }
       ],
       "checks": [],
+      "triggers": [],
       "foreignKeys": {
         "batches_created_by_id_foreign": {
           "columnNames": [
             "created_by_id"
           ],
           "constraintName": "batches_created_by_id_foreign",
-          "localTableName": "public.batches",
+          "localTableName": "batches",
           "referencedColumnNames": [
             "id"
           ],
-          "referencedTableName": "public.users",
+          "referencedTableName": "users",
+          "updateRule": "restrict",
           "deleteRule": "set null"
         },
         "batches_product_id_foreign": {
@@ -226,11 +271,12 @@
             "product_id"
           ],
           "constraintName": "batches_product_id_foreign",
-          "localTableName": "public.batches",
+          "localTableName": "batches",
           "referencedColumnNames": [
             "id"
           ],
-          "referencedTableName": "public.products",
+          "referencedTableName": "products",
+          "updateRule": "restrict",
           "deleteRule": "set null"
         },
         "batches_supervised_by_id_foreign": {
@@ -238,40 +284,41 @@
             "supervised_by_id"
           ],
           "constraintName": "batches_supervised_by_id_foreign",
-          "localTableName": "public.batches",
+          "localTableName": "batches",
           "referencedColumnNames": [
             "id"
           ],
-          "referencedTableName": "public.users",
+          "referencedTableName": "users",
+          "updateRule": "restrict",
           "deleteRule": "set null"
         }
       },
-      "comment": null
+      "comment": ""
     },
     {
       "name": "main_steps",
-      "schema": "public",
       "columns": {
         "created_at": {
           "name": "created_at",
-          "type": "timestamptz(6)",
+          "type": "datetime",
           "unsigned": false,
           "autoincrement": false,
           "primary": false,
           "nullable": false,
           "unique": false,
-          "length": 6,
+          "length": null,
           "precision": null,
           "scale": null,
           "default": null,
           "comment": null,
+          "collation": null,
           "enumItems": [],
           "mappedType": "datetime"
         },
         "id": {
           "name": "id",
           "type": "int",
-          "unsigned": false,
+          "unsigned": true,
           "autoincrement": true,
           "primary": true,
           "nullable": false,
@@ -281,6 +328,7 @@
           "scale": null,
           "default": null,
           "comment": null,
+          "collation": null,
           "enumItems": [],
           "mappedType": "integer"
         },
@@ -292,18 +340,19 @@
           "primary": false,
           "nullable": false,
           "unique": false,
-          "length": null,
+          "length": 65535,
           "precision": null,
           "scale": null,
           "default": null,
           "comment": null,
+          "collation": null,
           "enumItems": [],
           "mappedType": "text"
         },
         "product_id": {
           "name": "product_id",
           "type": "int",
-          "unsigned": false,
+          "unsigned": true,
           "autoincrement": false,
           "primary": false,
           "nullable": true,
@@ -313,6 +362,7 @@
           "scale": null,
           "default": null,
           "comment": null,
+          "collation": null,
           "enumItems": [],
           "mappedType": "integer"
         }
@@ -324,36 +374,47 @@
           ],
           "composite": false,
           "constraint": true,
-          "keyName": "main_steps_pkey",
+          "keyName": "PRIMARY",
           "primary": true,
           "unique": true
+        },
+        {
+          "columnNames": [
+            "product_id"
+          ],
+          "composite": false,
+          "constraint": false,
+          "keyName": "main_steps_product_id_index",
+          "primary": false,
+          "unique": false
         }
       ],
       "checks": [],
+      "triggers": [],
       "foreignKeys": {
         "main_steps_product_id_foreign": {
           "columnNames": [
             "product_id"
           ],
           "constraintName": "main_steps_product_id_foreign",
-          "localTableName": "public.main_steps",
+          "localTableName": "main_steps",
           "referencedColumnNames": [
             "id"
           ],
-          "referencedTableName": "public.products",
+          "referencedTableName": "products",
+          "updateRule": "restrict",
           "deleteRule": "set null"
         }
       },
-      "comment": null
+      "comment": ""
     },
     {
       "name": "parameters",
-      "schema": "public",
       "columns": {
         "id": {
           "name": "id",
           "type": "int",
-          "unsigned": false,
+          "unsigned": true,
           "autoincrement": true,
           "primary": true,
           "nullable": false,
@@ -363,6 +424,7 @@
           "scale": null,
           "default": null,
           "comment": null,
+          "collation": null,
           "enumItems": [],
           "mappedType": "integer"
         },
@@ -374,11 +436,12 @@
           "primary": false,
           "nullable": true,
           "unique": false,
-          "length": null,
+          "length": 65535,
           "precision": null,
           "scale": null,
           "default": null,
           "comment": null,
+          "collation": null,
           "enumItems": [],
           "mappedType": "text"
         },
@@ -390,18 +453,19 @@
           "primary": false,
           "nullable": false,
           "unique": false,
-          "length": null,
+          "length": 65535,
           "precision": null,
           "scale": null,
           "default": null,
           "comment": null,
+          "collation": null,
           "enumItems": [],
           "mappedType": "text"
         },
         "sub_step_id": {
           "name": "sub_step_id",
           "type": "int",
-          "unsigned": false,
+          "unsigned": true,
           "autoincrement": false,
           "primary": false,
           "nullable": true,
@@ -411,6 +475,7 @@
           "scale": null,
           "default": null,
           "comment": null,
+          "collation": null,
           "enumItems": [],
           "mappedType": "integer"
         },
@@ -422,11 +487,12 @@
           "primary": false,
           "nullable": true,
           "unique": false,
-          "length": null,
+          "length": 65535,
           "precision": null,
           "scale": null,
           "default": null,
           "comment": null,
+          "collation": null,
           "enumItems": [],
           "mappedType": "text"
         },
@@ -438,11 +504,12 @@
           "primary": false,
           "nullable": true,
           "unique": false,
-          "length": null,
+          "length": 65535,
           "precision": null,
           "scale": null,
           "default": null,
           "comment": null,
+          "collation": null,
           "enumItems": [],
           "mappedType": "text"
         }
@@ -454,52 +521,64 @@
           ],
           "composite": false,
           "constraint": true,
-          "keyName": "parameters_pkey",
+          "keyName": "PRIMARY",
           "primary": true,
           "unique": true
+        },
+        {
+          "columnNames": [
+            "sub_step_id"
+          ],
+          "composite": false,
+          "constraint": false,
+          "keyName": "parameters_sub_step_id_index",
+          "primary": false,
+          "unique": false
         }
       ],
       "checks": [],
+      "triggers": [],
       "foreignKeys": {
         "parameters_sub_step_id_foreign": {
           "columnNames": [
             "sub_step_id"
           ],
           "constraintName": "parameters_sub_step_id_foreign",
-          "localTableName": "public.parameters",
+          "localTableName": "parameters",
           "referencedColumnNames": [
             "id"
           ],
-          "referencedTableName": "public.sub_steps",
+          "referencedTableName": "sub_steps",
+          "updateRule": "restrict",
           "deleteRule": "set null"
         }
       },
-      "comment": null
+      "comment": ""
     },
     {
       "name": "products",
-      "schema": "public",
       "columns": {
         "created_at": {
           "name": "created_at",
-          "type": "timestamptz(6)",
+          "type": "datetime",
           "unsigned": false,
           "autoincrement": false,
           "primary": false,
           "nullable": false,
           "unique": false,
-          "length": 6,
+          "length": null,
           "precision": null,
           "scale": null,
           "default": null,
           "comment": null,
+          "collation": null,
           "enumItems": [],
           "mappedType": "datetime"
         },
         "id": {
           "name": "id",
           "type": "int",
-          "unsigned": false,
+          "unsigned": true,
           "autoincrement": true,
           "primary": true,
           "nullable": false,
@@ -509,6 +588,7 @@
           "scale": null,
           "default": null,
           "comment": null,
+          "collation": null,
           "enumItems": [],
           "mappedType": "integer"
         },
@@ -520,11 +600,12 @@
           "primary": false,
           "nullable": false,
           "unique": false,
-          "length": null,
+          "length": 65535,
           "precision": null,
           "scale": null,
           "default": null,
           "comment": null,
+          "collation": null,
           "enumItems": [],
           "mappedType": "text"
         }
@@ -536,38 +617,22 @@
           ],
           "composite": false,
           "constraint": true,
-          "keyName": "products_pkey",
+          "keyName": "PRIMARY",
           "primary": true,
           "unique": true
         }
       ],
       "checks": [],
+      "triggers": [],
       "foreignKeys": {},
-      "comment": null
+      "comment": ""
     },
     {
       "name": "sub_steps",
-      "schema": "public",
       "columns": {
         "created_at": {
           "name": "created_at",
-          "type": "timestamptz(6)",
-          "unsigned": false,
-          "autoincrement": false,
-          "primary": false,
-          "nullable": false,
-          "unique": false,
-          "length": 6,
-          "precision": null,
-          "scale": null,
-          "default": null,
-          "comment": null,
-          "enumItems": [],
-          "mappedType": "datetime"
-        },
-        "dynamic": {
-          "name": "dynamic",
-          "type": "boolean",
+          "type": "datetime",
           "unsigned": false,
           "autoincrement": false,
           "primary": false,
@@ -576,15 +641,33 @@
           "length": null,
           "precision": null,
           "scale": null,
+          "default": null,
+          "comment": null,
+          "collation": null,
+          "enumItems": [],
+          "mappedType": "datetime"
+        },
+        "dynamic": {
+          "name": "dynamic",
+          "type": "tinyint(1)",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "unique": false,
+          "length": null,
+          "precision": 3,
+          "scale": 0,
           "default": "false",
           "comment": null,
+          "collation": null,
           "enumItems": [],
           "mappedType": "boolean"
         },
         "id": {
           "name": "id",
           "type": "int",
-          "unsigned": false,
+          "unsigned": true,
           "autoincrement": true,
           "primary": true,
           "nullable": false,
@@ -594,13 +677,14 @@
           "scale": null,
           "default": null,
           "comment": null,
+          "collation": null,
           "enumItems": [],
           "mappedType": "integer"
         },
         "main_step_id": {
           "name": "main_step_id",
           "type": "int",
-          "unsigned": false,
+          "unsigned": true,
           "autoincrement": false,
           "primary": false,
           "nullable": true,
@@ -610,6 +694,7 @@
           "scale": null,
           "default": null,
           "comment": null,
+          "collation": null,
           "enumItems": [],
           "mappedType": "integer"
         },
@@ -621,11 +706,12 @@
           "primary": false,
           "nullable": false,
           "unique": false,
-          "length": null,
+          "length": 65535,
           "precision": null,
           "scale": null,
           "default": null,
           "comment": null,
+          "collation": null,
           "enumItems": [],
           "mappedType": "text"
         }
@@ -637,45 +723,57 @@
           ],
           "composite": false,
           "constraint": true,
-          "keyName": "sub_steps_pkey",
+          "keyName": "PRIMARY",
           "primary": true,
           "unique": true
+        },
+        {
+          "columnNames": [
+            "main_step_id"
+          ],
+          "composite": false,
+          "constraint": false,
+          "keyName": "sub_steps_main_step_id_index",
+          "primary": false,
+          "unique": false
         }
       ],
       "checks": [],
+      "triggers": [],
       "foreignKeys": {
         "sub_steps_main_step_id_foreign": {
           "columnNames": [
             "main_step_id"
           ],
           "constraintName": "sub_steps_main_step_id_foreign",
-          "localTableName": "public.sub_steps",
+          "localTableName": "sub_steps",
           "referencedColumnNames": [
             "id"
           ],
-          "referencedTableName": "public.main_steps",
+          "referencedTableName": "main_steps",
+          "updateRule": "restrict",
           "deleteRule": "set null"
         }
       },
-      "comment": null
+      "comment": ""
     },
     {
       "name": "users",
-      "schema": "public",
       "columns": {
         "created_at": {
           "name": "created_at",
-          "type": "timestamptz(6)",
+          "type": "datetime",
           "unsigned": false,
           "autoincrement": false,
           "primary": false,
           "nullable": false,
           "unique": false,
-          "length": 6,
+          "length": null,
           "precision": null,
           "scale": null,
           "default": null,
           "comment": null,
+          "collation": null,
           "enumItems": [],
           "mappedType": "datetime"
         },
@@ -687,18 +785,19 @@
           "primary": false,
           "nullable": true,
           "unique": true,
-          "length": null,
+          "length": 65535,
           "precision": null,
           "scale": null,
           "default": null,
           "comment": null,
+          "collation": null,
           "enumItems": [],
           "mappedType": "text"
         },
         "id": {
           "name": "id",
           "type": "int",
-          "unsigned": false,
+          "unsigned": true,
           "autoincrement": true,
           "primary": true,
           "nullable": false,
@@ -708,6 +807,7 @@
           "scale": null,
           "default": null,
           "comment": null,
+          "collation": null,
           "enumItems": [],
           "mappedType": "integer"
         },
@@ -719,11 +819,12 @@
           "primary": false,
           "nullable": false,
           "unique": false,
-          "length": null,
+          "length": 65535,
           "precision": null,
           "scale": null,
           "default": null,
           "comment": null,
+          "collation": null,
           "enumItems": [],
           "mappedType": "text"
         },
@@ -735,11 +836,12 @@
           "primary": false,
           "nullable": true,
           "unique": true,
-          "length": null,
+          "length": 65535,
           "precision": null,
           "scale": null,
           "default": null,
           "comment": null,
+          "collation": null,
           "enumItems": [],
           "mappedType": "text"
         },
@@ -751,11 +853,12 @@
           "primary": false,
           "nullable": false,
           "unique": false,
-          "length": null,
+          "length": 65535,
           "precision": null,
           "scale": null,
           "default": null,
           "comment": null,
+          "collation": null,
           "enumItems": [],
           "mappedType": "text"
         },
@@ -767,27 +870,29 @@
           "primary": false,
           "nullable": false,
           "unique": false,
-          "length": null,
+          "length": 65535,
           "precision": null,
           "scale": null,
           "default": "'active'",
           "comment": null,
+          "collation": null,
           "enumItems": [],
           "mappedType": "text"
         },
         "updated_at": {
           "name": "updated_at",
-          "type": "timestamptz(6)",
+          "type": "datetime",
           "unsigned": false,
           "autoincrement": false,
           "primary": false,
           "nullable": true,
           "unique": false,
-          "length": 6,
+          "length": null,
           "precision": null,
           "scale": null,
           "default": null,
           "comment": null,
+          "collation": null,
           "enumItems": [],
           "mappedType": "datetime"
         },
@@ -799,16 +904,27 @@
           "primary": false,
           "nullable": false,
           "unique": false,
-          "length": null,
+          "length": 65535,
           "precision": null,
           "scale": null,
           "default": null,
           "comment": null,
+          "collation": null,
           "enumItems": [],
           "mappedType": "text"
         }
       },
       "indexes": [
+        {
+          "columnNames": [
+            "id"
+          ],
+          "composite": false,
+          "constraint": true,
+          "keyName": "PRIMARY",
+          "primary": true,
+          "unique": true
+        },
         {
           "columnNames": [
             "email"
@@ -831,28 +947,25 @@
         },
         {
           "columnNames": [
-            "id"
-          ],
-          "composite": false,
-          "constraint": true,
-          "keyName": "users_pkey",
-          "primary": true,
-          "unique": true
-        },
-        {
-          "columnNames": [
             "username"
           ],
           "composite": false,
           "constraint": false,
           "keyName": "users_username_index",
           "primary": false,
-          "unique": false
+          "unique": false,
+          "columns": [
+            {
+              "name": "username",
+              "length": 768
+            }
+          ]
         }
       ],
       "checks": [],
+      "triggers": [],
       "foreignKeys": {},
-      "comment": null
+      "comment": ""
     }
   ],
   "views": [],
