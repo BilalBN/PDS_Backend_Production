@@ -12,8 +12,8 @@ export class CreateUserService {
     const filterQuery: FilterQuery<UserSchemaClass> = [];
 
     if (userDto.email) filterQuery.push({ email: userDto.email });
-    if (userDto.phone) filterQuery.push({ email: userDto.phone });
-    if (userDto.username) filterQuery.push({ email: userDto.username });
+    if (userDto.phone) filterQuery.push({ phone: userDto.phone });
+    if (userDto.username) filterQuery.push({ username: userDto.username });
 
     const user = await em.findOne(UserSchemaClass, {
       $or: filterQuery,
