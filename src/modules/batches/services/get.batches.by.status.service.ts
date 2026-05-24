@@ -20,15 +20,24 @@ export class GetBatchesByStatusService {
     const offset = (page - 1) * limit;
     const [batches, count] = await em.findAndCount(
       BatchesSchemaClass,
+      { status: status, supervised_by: user },
       {
-        status: status,
-        supervised_by: user,
-      },
-      {
-        limit,
-        orderBy: { id: 'ASC' },
+        fields: [
+          'created_at',
+          'end_date',
+          'expiry_date',
+          'id',
+          'name',
+          'size',
+          'start_date',
+          'product.created_at',
+          'product.id',
+          'product.main_steps',
+          'product.name',
+        ],
         offset,
-        populate: ['created_by', 'product', 'supervised_by'],
+        limit,
+        orderBy: { id: 'DESC' },
       },
     );
 
@@ -39,12 +48,30 @@ export class GetBatchesByStatusService {
       });
     }
 
+    const batchesSerialized = batches.map((batchEntity) => {
+      return {
+        created_at: batchEntity.created_at,
+        end_date: batchEntity.end_date,
+        expiry_date: batchEntity.expiry_date,
+        id: batchEntity.id,
+        name: batchEntity.name,
+        product: {
+          id: batchEntity.product?.id,
+          created_at: batchEntity.product?.created_at,
+          name: batchEntity.product?.name,
+        },
+        size: batchEntity.size,
+        start_date: batchEntity.start_date,
+        main_steps_count: batchEntity.product?.main_steps.length,
+      };
+    });
+
     return {
       data: {
         page,
         limit,
         total_count: count,
-        batches,
+        batches: batchesSerialized,
       },
       message: 'Batches returned successfully',
       success: true,

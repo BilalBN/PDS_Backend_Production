@@ -32,6 +32,7 @@ export class GetSupervisedBatchesService {
           'start_date',
           'product.created_at',
           'product.id',
+          'product.main_steps',
           'product.name',
         ],
         offset,
@@ -47,12 +48,30 @@ export class GetSupervisedBatchesService {
       });
     }
 
+    const batchesSerialized = batches.map((batchEntity) => {
+      return {
+        created_at: batchEntity.created_at,
+        end_date: batchEntity.end_date,
+        expiry_date: batchEntity.expiry_date,
+        id: batchEntity.id,
+        name: batchEntity.name,
+        product: {
+          id: batchEntity.product?.id,
+          created_at: batchEntity.product?.created_at,
+          name: batchEntity.product?.name,
+        },
+        size: batchEntity.size,
+        start_date: batchEntity.start_date,
+        main_steps_count: batchEntity.product?.main_steps.length,
+      };
+    });
+
     return {
       data: {
         page,
         limit,
         total_count: count,
-        batches,
+        batches: batchesSerialized,
       },
       message: 'Batches returned successfully',
       success: true,

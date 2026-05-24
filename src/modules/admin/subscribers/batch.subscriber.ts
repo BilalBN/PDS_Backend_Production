@@ -19,7 +19,21 @@ export class BatchSubscriber implements EventSubscriber<BatchesSchemaClass> {
 
   afterCreate(args: EventArgs<BatchesSchemaClass>) {
     // Push the data to the supervisor
-    const batch = args.entity;
+    const batchEntity = args.entity;
+    const batch = {
+      created_at: batchEntity.created_at,
+      created_by: batchEntity.created_by,
+      end_date: batchEntity.end_date,
+      expiry_date: batchEntity.expiry_date,
+      id: batchEntity.id,
+      name: batchEntity.name,
+      product: batchEntity.product,
+      size: batchEntity.size,
+      start_date: batchEntity.start_date,
+      status: batchEntity.status,
+      supervised_by: batchEntity.supervised_by,
+      main_steps_count: batchEntity.product?.main_steps.length,
+    };
     this.client.emit('batch/create', batch);
   }
 

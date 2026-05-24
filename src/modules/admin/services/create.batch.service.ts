@@ -22,9 +22,13 @@ export class CreateBatchesService {
     const supervisor = await em.findOne(UserSchemaClass, {
       id: batchDto.supervisor_id,
     });
-    const product = await em.findOne(ProductsSchemaClass, {
-      id: batchDto.product_id,
-    });
+    const product = await em.findOne(
+      ProductsSchemaClass,
+      {
+        id: batchDto.product_id,
+      },
+      { populate: ['main_steps'] },
+    );
     const batch = em.create(BatchesSchemaClass, {
       created_by: user,
       name: batchDto.name,
