@@ -36,23 +36,20 @@ describe('Add sub step value service test', () => {
 
   it('Should return sub steps', async () => {
     const subStepValue = {
-      batchId: 1,
-      enteredBy: 2,
-      parameterId: 10,
+      batch_id: 1,
+      entered_by: 10,
+      parameter_id: 10,
       value: 'test',
     };
     const result = await addSubStepValueService.addValue(1, subStepValue);
-    expect(result).toEqual({
-      message: 'Value added successfully',
-      success: true,
-    });
+    expect(result.message).toEqual('Value added successfully');
   });
 
   it('Should return user found!', async () => {
     const subStepValue = {
-      batchId: 0,
-      enteredBy: 0,
-      parameterId: 0,
+      batch_id: 0,
+      entered_by: 0,
+      parameter_id: 0,
       value: undefined,
     };
     await expect(

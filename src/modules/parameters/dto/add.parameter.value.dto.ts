@@ -4,17 +4,17 @@ export class AddParameterValueDto {
   @IsNotEmpty()
   @IsNumber()
   @Min(1)
-  batchId!: number;
+  batch_id!: number;
 
   @IsNotEmpty()
   @IsNumber()
   @Min(1)
-  enteredBy!: number;
+  entered_by!: number;
 
   @IsNotEmpty()
   @IsNumber()
   @Min(1)
-  parameterId!: number;
+  parameter_id!: number;
 
   @IsNotEmpty()
   value!: any;

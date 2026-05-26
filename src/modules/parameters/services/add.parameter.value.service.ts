@@ -24,11 +24,11 @@ export class AddParameterValueService {
       });
     }
 
-    const { batchId, enteredBy, parameterId, value } = valueDto;
+    const { batch_id, entered_by, parameter_id, value } = valueDto;
     await this.parameterValueModel
       .findOneAndUpdate(
-        { batchId: batchId, enteredBy: enteredBy, parameterId: parameterId },
-        { $set: { value: value } },
+        { batchId: batch_id, parameterId: parameter_id },
+        { $set: { value: value, enteredBy: entered_by } },
         {
           returnDocument: 'after',
           runValidators: true,
@@ -39,6 +39,9 @@ export class AddParameterValueService {
       .exec();
 
     return {
+      data: {
+        parameter_id: parameter_id,
+      },
       message: 'Value added successfully',
       success: true,
     };
