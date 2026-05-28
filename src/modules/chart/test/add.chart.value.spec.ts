@@ -7,11 +7,12 @@ import {
   databaseConfig,
   mongoDbConfig,
 } from '../../../configs/database.config';
-import { ParameterValuesSchema } from '../entities/parameter.value.entity';
-import { AddParameterValueService } from '../services/add.parameter.value.service';
+import { AddChartValueDto } from '../dto/add.chart.value.dto';
+import { ChartValuesSchema } from '../entities/chat.value.entity';
+import { AddChartValuesService } from '../services/add.chart.values.service';
 
-describe('Add parameter value service test', () => {
-  let addSubStepValueService: AddParameterValueService;
+describe('Add chart value service test', () => {
+  let addChartValueService: AddChartValuesService;
   let module: TestingModule;
 
   beforeAll(async () => {
@@ -22,38 +23,41 @@ describe('Add parameter value service test', () => {
         mongoDbConfig,
         MongooseModule.forFeature([
           {
-            schema: ParameterValuesSchema,
-            name: 'parameterValue',
+            schema: ChartValuesSchema,
+            name: 'CHART_VALUE',
           },
         ]),
       ],
-      providers: [AddParameterValueService],
+      providers: [AddChartValuesService],
     }).compile();
-    addSubStepValueService = module.get(AddParameterValueService);
+    addChartValueService = module.get(AddChartValuesService);
   });
 
   afterAll(async () => await module.close());
 
   it('Should return value added successfully', async () => {
-    const subStepValue = {
+    const chartValue: AddChartValueDto = {
       batch_id: 1,
       entered_by: 10,
-      parameter_id: 10,
-      value: 'test',
+      sub_step_id: 10,
+      values: [
+        { parameter_id: 1, value: '10' },
+        { parameter_id: 2, value: '60' },
+      ],
     };
-    const result = await addSubStepValueService.addValue(1, subStepValue);
+    const result = await addChartValueService.addValue(1, chartValue);
     expect(result.message).toEqual('Value added successfully');
   });
 
   it('Should return user found!', async () => {
-    const subStepValue = {
+    const chartValue = {
       batch_id: 0,
       entered_by: 0,
-      parameter_id: 0,
-      value: undefined,
+      sub_step_id: 0,
+      values: [],
     };
     await expect(
-      addSubStepValueService.addValue(100, subStepValue),
+      addChartValueService.addValue(100, chartValue),
     ).rejects.toThrow(NotFoundException);
   });
 });
