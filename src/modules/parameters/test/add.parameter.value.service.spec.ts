@@ -11,7 +11,7 @@ import { ParameterValuesSchema } from '../entities/parameter.value.entity';
 import { AddParameterValueService } from '../services/add.parameter.value.service';
 
 describe('Add parameter value service test', () => {
-  let addSubStepValueService: AddParameterValueService;
+  let addParameterValueService: AddParameterValueService;
   let module: TestingModule;
 
   beforeAll(async () => {
@@ -29,7 +29,7 @@ describe('Add parameter value service test', () => {
       ],
       providers: [AddParameterValueService],
     }).compile();
-    addSubStepValueService = module.get(AddParameterValueService);
+    addParameterValueService = module.get(AddParameterValueService);
   });
 
   afterAll(async () => await module.close());
@@ -37,11 +37,11 @@ describe('Add parameter value service test', () => {
   it('Should return value added successfully', async () => {
     const subStepValue = {
       batch_id: 1,
-      entered_by: 10,
-      parameter_id: 10,
+      entered_by: 1,
+      parameter_id: 11,
       value: 'test',
     };
-    const result = await addSubStepValueService.addValue(1, subStepValue);
+    const result = await addParameterValueService.addValue(1, subStepValue);
     expect(result.message).toEqual('Value added successfully');
   });
 
@@ -53,7 +53,7 @@ describe('Add parameter value service test', () => {
       value: undefined,
     };
     await expect(
-      addSubStepValueService.addValue(100, subStepValue),
+      addParameterValueService.addValue(100, subStepValue),
     ).rejects.toThrow(NotFoundException);
   });
 });

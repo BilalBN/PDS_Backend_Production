@@ -25,10 +25,23 @@ export class AddParameterValueService {
     }
 
     const { batch_id, entered_by, parameter_id, value } = valueDto;
+    const enteredUser = await em.findOne(UserSchemaClass, { id: entered_by });
+    if (!enteredUser) {
+      throw new NotFoundException({
+        message: 'Operator not found!',
+        success: false,
+      });
+    }
     await this.parameterValueModel
       .findOneAndUpdate(
         { batchId: batch_id, parameterId: parameter_id },
-        { $set: { value: value, enteredBy: entered_by } },
+        {
+          $set: {
+            value: value,
+            enteredBy: { id: enteredUser.id, name: enteredUser.username },
+            parameterId: parameter_id,
+          },
+        },
         {
           returnDocument: 'after',
           runValidators: true,
@@ -41,6 +54,7 @@ export class AddParameterValueService {
     return {
       data: {
         parameter_id: parameter_id,
+        value: value,
       },
       message: 'Value added successfully',
       success: true,

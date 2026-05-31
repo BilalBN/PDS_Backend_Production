@@ -3,17 +3,17 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { UserSchemaClass } from '../../user/entities/user.entity';
-import { BatchChart } from '../entities/chart.value.entity';
+import { ParameterValues } from '../entities/parameter.value.entity';
 
 @Injectable()
-export class GetChartValuesService {
+export class GetParameterValuesService {
   constructor(
     private readonly entityManager: EntityManager,
-    @InjectModel('batch_chart')
-    private batchChartModel: Model<BatchChart>,
+    @InjectModel('parameterValue')
+    private parameterValueModel: Model<ParameterValues>,
   ) {}
 
-  async get(userId: number, batchId: number, subStepId: number) {
+  async get(userId: number, batchId: number) {
     const em = this.entityManager.fork();
     const user = await em.findOne(UserSchemaClass, { id: userId });
     if (!user) {
@@ -23,25 +23,22 @@ export class GetChartValuesService {
       });
     }
 
-    const chart = await this.batchChartModel
-      .find({
-        batchId: batchId,
-        'chart.subStepId': subStepId,
-      })
-      .select('-__v')
+    const parameters = await this.parameterValueModel
+      .find({ batchId: batchId })
+      .select('-_id -__v')
       .lean()
       .exec();
 
-    if (chart.length == 0) {
+    if (parameters.length == 0) {
       throw new NotFoundException({
-        message: 'No charts found!',
+        message: 'No parameters found!',
         success: false,
       });
     }
 
     return {
-      data: chart,
-      message: 'Charts returned successfully',
+      data: parameters,
+      message: 'Parameters returned successfully',
       success: true,
     };
   }

@@ -8,7 +8,7 @@ import {
   mongoDbConfig,
 } from '../../../configs/database.config';
 import { AddChartValueDto } from '../dto/add.chart.value.dto';
-import { ChartValuesSchema } from '../entities/chat.value.entity';
+import { BatchChartSchema } from '../entities/chart.value.entity';
 import { AddChartValuesService } from '../services/add.chart.values.service';
 
 describe('Add chart value service test', () => {
@@ -23,8 +23,8 @@ describe('Add chart value service test', () => {
         mongoDbConfig,
         MongooseModule.forFeature([
           {
-            schema: ChartValuesSchema,
-            name: 'CHART_VALUE',
+            schema: BatchChartSchema,
+            name: 'batch_chart',
           },
         ]),
       ],
@@ -38,11 +38,11 @@ describe('Add chart value service test', () => {
   it('Should return value added successfully', async () => {
     const chartValue: AddChartValueDto = {
       batch_id: 1,
-      entered_by: 10,
-      sub_step_id: 10,
+      entered_by: 1,
+      sub_step_id: 8,
       values: [
-        { parameter_id: 1, value: '10' },
-        { parameter_id: 2, value: '60' },
+        { name: 'parameter_1', parameter_id: 1, value: '10' },
+        { name: 'parameter_2', parameter_id: 2, value: '60' },
       ],
     };
     const result = await addChartValueService.addValue(1, chartValue);

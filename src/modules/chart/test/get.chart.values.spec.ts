@@ -7,7 +7,7 @@ import {
   databaseConfig,
   mongoDbConfig,
 } from '../../../configs/database.config';
-import { ChartValuesSchema } from '../entities/chat.value.entity';
+import { BatchChartSchema } from '../entities/chart.value.entity';
 import { GetChartValuesService } from '../services/get.chart.values.service';
 
 describe('Get chart values service test', () => {
@@ -22,8 +22,8 @@ describe('Get chart values service test', () => {
         mongoDbConfig,
         MongooseModule.forFeature([
           {
-            schema: ChartValuesSchema,
-            name: 'CHART_VALUE',
+            schema: BatchChartSchema,
+            name: 'batch_chart',
           },
         ]),
       ],
@@ -35,16 +35,26 @@ describe('Get chart values service test', () => {
   afterAll(async () => await module.close());
 
   it('Should return charts', async () => {
-    const result = await getChartValueService.get(1, 1, 1);
+    const result = await getChartValueService.get(1, 1, 5);
     expect(result.message).toEqual('Charts returned successfully');
-    expect(result.data).toEqual([
-      {
-        batchId: 1,
-        subStepId: 1,
-        enteredBy: 12,
-        values: [{ parameter_id: 10, value: 'test' }],
+    expect(result.data).toEqual({
+      chart: {
+        subStepId: 5,
+        enteredBy: 1,
+        imageUrl: null,
+        values: [
+          { name: 'parameter_1', parameter_id: 1, value: '10' },
+          { name: 'parameter_2', parameter_id: 2, value: '60' },
+        ],
       },
-    ]);
+      batchId: 1,
+    });
+  });
+
+  it('Should return no charts found!', async () => {
+    await expect(getChartValueService.get(1, 1, 100)).rejects.toThrow(
+      NotFoundException,
+    );
   });
 
   it('Should return user found!', async () => {
