@@ -37,12 +37,12 @@ describe('Add chart value service test', () => {
 
   it('Should return value added successfully', async () => {
     const chartValue: AddChartValueDto = {
-      batch_id: 1,
+      batch_id: 8,
       entered_by: 1,
-      sub_step_id: 8,
+      sub_step_id: 11,
       values: [
         { name: 'parameter_1', parameter_id: 1, value: '10' },
-        { name: 'parameter_2', parameter_id: 2, value: '60' },
+        { name: 'parameter_2', parameter_id: 2, value: '70' },
       ],
     };
     const result = await addChartValueService.addValue(1, chartValue);

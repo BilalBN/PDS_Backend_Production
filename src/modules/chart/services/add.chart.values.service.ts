@@ -32,25 +32,21 @@ export class AddChartValuesService {
         success: false,
       });
     }
+    const chartEntry = {
+      createdAt: new Date().toString(),
+      enteredBy: {
+        id: enteredUser.id,
+        name: enteredUser.username,
+      },
+      values: values,
+      imageUrl: image_url || null,
+    };
     await this.batchChartModel
       .findOneAndUpdate(
-        { batchId: batch_id, 'chart.subStepId': sub_step_id },
+        { batchId: batch_id, subStepId: sub_step_id },
         {
-          $setOnInsert: {
-            batchId: batch_id,
-            'chart.subStepId': sub_step_id,
-          },
-          $set: {
-            'chart.enteredBy': {
-              id: enteredUser.id,
-              name: enteredUser.username,
-              image_url: null,
-            },
-            'chart.imageUrl': image_url ?? null,
-          },
-          $push: {
-            'chart.values': { $each: values },
-          },
+          $setOnInsert: { batchId: batch_id, subStepId: sub_step_id },
+          $push: { chart: chartEntry },
         },
         {
           returnDocument: 'after',

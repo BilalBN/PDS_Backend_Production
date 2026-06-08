@@ -9,17 +9,17 @@ interface ChartEnteredUser {
 
 @Schema()
 export class ChartValue {
+  @Prop({ type: String })
+  createdAt!: string;
+
   @Prop({ type: Object })
   enteredBy!: ChartEnteredUser;
-
-  @Prop({ type: Number })
-  subStepId!: number;
 
   @Prop({ type: Array<ChartParameter> })
   values!: ChartParameter[];
 
   @Prop({ type: String, allowNull: true, default: null })
-  imageUrl?: string;
+  imageUrl?: string | null;
 }
 
 export const ChartValuesSchema = SchemaFactory.createForClass(ChartValue);
@@ -28,6 +28,9 @@ export const ChartValuesSchema = SchemaFactory.createForClass(ChartValue);
 export class BatchChart {
   @Prop({ index: 'asc', type: Number, unique: true })
   batchId!: number;
+
+  @Prop({ type: Number })
+  subStepId!: number;
 
   @Prop({ type: Array<ChartValue> })
   chart!: ChartValue[];

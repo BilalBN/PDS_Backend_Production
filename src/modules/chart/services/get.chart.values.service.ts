@@ -23,16 +23,13 @@ export class GetChartValuesService {
       });
     }
 
-    const chart = await this.batchChartModel
-      .find({
-        batchId: batchId,
-        'chart.subStepId': subStepId,
-      })
-      .select('-__v')
+    const result = await this.batchChartModel
+      .findOne({ batchId: batchId, subStepId: subStepId })
+      .select('chart -_id')
       .lean()
       .exec();
 
-    if (chart.length == 0) {
+    if (!result) {
       throw new NotFoundException({
         message: 'No charts found!',
         success: false,
@@ -40,7 +37,7 @@ export class GetChartValuesService {
     }
 
     return {
-      data: chart,
+      data: result.chart,
       message: 'Charts returned successfully',
       success: true,
     };
