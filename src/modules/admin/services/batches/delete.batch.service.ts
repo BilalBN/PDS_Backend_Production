@@ -1,6 +1,6 @@
 import { EntityManager } from '@mikro-orm/mariadb';
 import { Injectable, NotFoundException } from '@nestjs/common';
-import { BatchesSchemaClass } from '../../batches/entities/batches.entity';
+import { BatchesSchemaClass } from '../../../batches/entities/batches.entity';
 
 @Injectable()
 export class DeleteBatchService {

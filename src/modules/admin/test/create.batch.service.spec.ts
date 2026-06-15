@@ -3,7 +3,7 @@ import { afterAll, beforeAll, describe, expect, it } from 'vitest';
 import { config } from '../../../configs/config';
 import { databaseConfig } from '../../../configs/database.config';
 import { CreateBatchDto } from '../dto/create.batch.dto';
-import { CreateBatchesService } from '../services/create.batch.service';
+import { CreateBatchesService } from '../services/batches/create.batch.service';
 
 describe('Create batch service test', () => {
   let createBatchesService: CreateBatchesService;

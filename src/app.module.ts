@@ -12,6 +12,7 @@ import { AuthModule } from './modules/auth/auth.module';
 import { BatchesModule } from './modules/batches/batches.module';
 import { ChartModule } from './modules/chart/chart.module';
 import { ParameterModule } from './modules/parameters/parameter.module';
+import { ProductsModule } from './modules/products/products.module';
 import { StepsModule } from './modules/steps/steps.module';
 import { SupervisorModule } from './modules/supervisor/supervisor.module';
 import { UserModule } from './modules/user/user.module';
@@ -27,14 +28,15 @@ import { UserModule } from './modules/user/user.module';
       rootPath: join(__dirname, '..', 'uploads'),
       serveRoot: '/uploads',
     }),
-    AuthModule,
-    UserModule,
-    BatchesModule,
     AdminModule,
+    AuthModule,
+    BatchesModule,
+    ChartModule,
+    ParameterModule,
+    ProductsModule,
     StepsModule,
     SupervisorModule,
-    ParameterModule,
-    ChartModule,
+    UserModule,
   ],
   controllers: [AppController],
   providers: [AppService],

@@ -1,22 +1,24 @@
 import {
-  Body,
-  Controller,
-  DefaultValuePipe,
-  Delete,
-  Get,
-  Param,
-  ParseIntPipe,
-  Post,
-  Query,
-  Request,
-  UseGuards,
+    Body,
+    Controller,
+    DefaultValuePipe,
+    Delete,
+    Get,
+    Param,
+    ParseIntPipe,
+    Post,
+    Query,
+    Request,
+    UseGuards,
 } from '@nestjs/common';
 import { ApiBearerAuth, ApiParam, ApiQuery } from '@nestjs/swagger';
 import { AuthGuard } from '../../../shared/guards/auth.guard';
 import { CreateBatchDto } from '../dto/create.batch.dto';
-import { CreateBatchesService } from '../services/create.batch.service';
-import { DeleteBatchService } from '../services/delete.batch.service';
-import { GetBatchesService } from '../services/get.batches.service';
+import { CreateBatchesService } from '../services/batches/create.batch.service';
+import { DeleteBatchService } from '../services/batches/delete.batch.service';
+import { GetBatchProductsService } from '../services/batches/get.batch.products.service';
+import { GetBatchSupervisorsService } from '../services/batches/get.batch.supervisors.service';
+import { GetBatchesService } from '../services/batches/get.batches.service';
 
 @ApiBearerAuth()
 @UseGuards(AuthGuard)
@@ -25,6 +27,8 @@ export class AdminBatchController {
   constructor(
     private readonly createBatchService: CreateBatchesService,
     private readonly deleteBatchService: DeleteBatchService,
+    private readonly getBatchProductsService: GetBatchProductsService,
+    private readonly getBatchSupervisorsService: GetBatchSupervisorsService,
     private readonly getBatchesService: GetBatchesService,
   ) {}
 
@@ -37,6 +41,16 @@ export class AdminBatchController {
   @Delete(':id')
   async delete(@Param('id', ParseIntPipe) id: number) {
     return await this.deleteBatchService.delete(id);
+  }
+
+  @Get('products')
+  async getProducts(@Request() req) {
+    return await this.getBatchProductsService.get(req.user.id);
+  }
+
+  @Get('supervisors')
+  async getSupervisors(@Request() req) {
+    return await this.getBatchSupervisorsService.get(req.user.id);
   }
 
   @ApiQuery({ name: 'limit', default: 20, type: 'number' })
