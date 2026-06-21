@@ -1,12 +1,12 @@
 import { Controller, Get, Request, UseGuards } from '@nestjs/common';
 import { ApiBearerAuth } from '@nestjs/swagger';
-import { AuthGuard } from '../../../shared/guards/auth.guard';
-import { GetDashboardCountsService } from '../services/dashboard/get.dashboard.counts.service';
+import { AuthGuard } from '../../shared/guards/auth.guard';
+import { GetDashboardCountsService } from './services/get.dashboard.counts.service';
 
 @ApiBearerAuth()
 @UseGuards(AuthGuard)
-@Controller('admin/dashboard')
-export class AdminDashboardController {
+@Controller('dashboard')
+export class DashboardController {
   constructor(
     private readonly getDashboardCountsService: GetDashboardCountsService,
   ) {}

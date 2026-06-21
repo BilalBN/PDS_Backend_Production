@@ -1,13 +1,13 @@
 import { EntityManager } from '@mikro-orm/mariadb';
 import { Injectable, NotFoundException } from '@nestjs/common';
-import { BatchesSchemaClass } from '../../../batches/entities/batches.entity';
-import { UserSchemaClass } from '../../../user/entities/user.entity';
+import { UserSchemaClass } from '../../user/entities/user.entity';
+import { BatchesSchemaClass } from '../entities/batches.entity';
 
 @Injectable()
-export class GetBatchesService {
+export class GetSupervisedBatchesService {
   constructor(private readonly entityManager: EntityManager) {}
 
-  async getAll(userId: number, limit = 20, page = 1) {
+  async get(userId: number, limit = 20, page = 1) {
     const em = this.entityManager.fork();
     const user = await em.findOne(UserSchemaClass, { id: userId });
     if (!user) {
@@ -29,7 +29,7 @@ export class GetBatchesService {
         'b.size',
         'b.start_date',
       ])
-      .where({ 'b.created_by': user })
+      .where({ 'b.supervised_by': user })
       .offset(offset)
       .limit(limit)
       .orderBy({ id: 'DESC' })

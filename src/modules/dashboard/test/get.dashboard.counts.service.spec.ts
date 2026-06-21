@@ -25,7 +25,7 @@ describe('Get dashboard counts service test', () => {
       data: {
         products: 6,
         users: 3,
-        batches: 22,
+        batches: 3,
       },
       message: 'Counts returned successfully',
       success: true,

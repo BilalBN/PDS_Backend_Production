@@ -1,9 +1,9 @@
 import { EntityManager } from '@mikro-orm/mariadb';
 import { Injectable, NotFoundException } from '@nestjs/common';
-import { UserSchemaClass } from '../../../user/entities/user.entity';
+import { UserSchemaClass } from '../entities/user.entity';
 
 @Injectable()
-export class GetBatchSupervisorsService {
+export class GetUsersService {
   constructor(private readonly entityManager: EntityManager) {}
 
   async get(userId: number) {
@@ -16,19 +16,19 @@ export class GetBatchSupervisorsService {
       });
     }
 
-    const supervisors = await em.find(UserSchemaClass, {
+    const users = await em.find(UserSchemaClass, {
       $not: { role: 'admin' },
     });
-    if (supervisors.length == 0) {
+    if (users.length == 0) {
       throw new NotFoundException({
-        message: 'No supervisors found!',
+        message: 'No users found!',
         success: false,
       });
     }
 
     return {
-      data: supervisors,
-      message: 'Supervisors returned successfully',
+      data: users,
+      message: 'Users returned successfully',
       success: true,
     };
   }

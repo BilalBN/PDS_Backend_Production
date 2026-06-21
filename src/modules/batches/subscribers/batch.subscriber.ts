@@ -1,4 +1,4 @@
-import { EntityName, EventArgs, EventSubscriber } from '@mikro-orm/core';
+import { EventArgs, EventSubscriber } from '@mikro-orm/core';
 import { EntityManager } from '@mikro-orm/mariadb';
 import { Inject, Injectable } from '@nestjs/common';
 import { ClientProxy } from '@nestjs/microservices';
@@ -7,13 +7,13 @@ import { BatchesSchemaClass } from '../../batches/entities/batches.entity';
 @Injectable()
 export class BatchSubscriber implements EventSubscriber<BatchesSchemaClass> {
   constructor(
-    em: EntityManager,
+    entityManager: EntityManager,
     @Inject('MQTT_SERVICE') private client: ClientProxy,
   ) {
-    em.getEventManager().registerSubscriber(this);
+    entityManager.getEventManager().registerSubscriber(this);
   }
 
-  getSubscribedEntities(): EntityName<BatchesSchemaClass>[] {
+  getSubscribedEntities() {
     return [BatchesSchemaClass];
   }
 

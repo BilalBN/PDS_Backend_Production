@@ -1,7 +1,7 @@
 import { EntityManager } from '@mikro-orm/mariadb';
 import { Injectable, NotFoundException } from '@nestjs/common';
-import { ProductsSchemaClass } from '../../../products/entities/products.entity';
-import { UserSchemaClass } from '../../../user/entities/user.entity';
+import { ProductsSchemaClass } from '../../products/entities/products.entity';
+import { UserSchemaClass } from '../../user/entities/user.entity';
 
 @Injectable()
 export class GetBatchProductsService {
